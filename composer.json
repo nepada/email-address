@@ -1,0 +1,39 @@
+{
+    "name": "nepada/email-address",
+    "type": "library",
+    "license": "BSD-3-Clause",
+    "description": "Email address value object.",
+    "keywords": ["email address", "value object", "nette"],
+    "support": {
+        "email": "petr@pada.cz",
+        "issues": "https://github.com/nepada/email-address/issues"
+    },
+    "authors": [
+        {
+            "name": "Petr Morávek",
+            "email": "petr@pada.cz"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "nette/utils": "^2.4@dev || ^3.0@dev"
+    },
+    "require-dev": {
+        "nette/tester": "^2.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Nepada\\EmailAddress\\": "src/EmailAddress/"
+        }
+    },
+    "autoload-dev": {
+        "classmap": [
+            "tests/"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
