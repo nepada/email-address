@@ -48,3 +48,10 @@ Note: This is not RFC 5321 compliant, however in practice all major mail provide
 echo($emailAddress->getLocalPart()); // Real.example+suffix
 echo($emailAddress->getDomain()); // xn--hkyrky-ptac70bc.cz
 ```
+
+
+Integrations
+------------
+
+- [nepada/email-address-doctrine](https://github.com/nepada/email-address-doctrine) - Email address type for Doctrine.
+- [nepada/email-address-input](https://github.com/nepada/email-address-input) - Email address form input for Nette forms.
