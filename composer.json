@@ -16,6 +16,7 @@
     ],
     "require": {
         "php": ">=7.1.0",
+        "ext-intl": "*",
         "nette/utils": "^2.4@dev || ^3.0@dev"
     },
     "require-dev": {
