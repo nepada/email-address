@@ -50,7 +50,12 @@ class EmailAddress
      */
     public function getDomain(): string
     {
-        return idn_to_ascii($this->domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+        $normalizedDomain = idn_to_ascii($this->domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+        if ($normalizedDomain === false) {
+            throw new FailedToNormalizeDomainException($this->domain);
+        }
+
+        return $normalizedDomain;
     }
 
     /**
