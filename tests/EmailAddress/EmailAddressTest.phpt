@@ -5,7 +5,7 @@ namespace NepadaTests\EmailAddress;
 
 use Nepada\EmailAddress\EmailAddress;
 use Nepada\EmailAddress\InvalidEmailAddressException;
-use Tester;
+use NepadaTests\TestCase;
 use Tester\Assert;
 
 require_once __DIR__ . '/../bootstrap.php';
@@ -14,7 +14,7 @@ require_once __DIR__ . '/../bootstrap.php';
 /**
  * @testCase
  */
-class EmailAddressTest extends Tester\TestCase
+class EmailAddressTest extends TestCase
 {
 
     /**
