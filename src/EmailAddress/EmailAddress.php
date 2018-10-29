@@ -18,19 +18,44 @@ class EmailAddress
     /** @var string */
     private $domain;
 
+    private function __construct(string $domain, string $localPart)
+    {
+        $this->domain = $domain;
+        $this->localPart = $localPart;
+    }
+
     /**
-     * @param string $value
+     * @param string $emailAddress
+     * @return static
      * @throws InvalidEmailAddressException
      */
-    public function __construct(string $value)
+    public static function fromString(string $emailAddress): self
     {
-        if (!Validators::isEmail($value)) {
-            throw new InvalidEmailAddressException($value);
+        if (!Validators::isEmail($emailAddress)) {
+            throw new InvalidEmailAddressException($emailAddress);
         }
 
-        $parts = Strings::split($value, '~@~');
-        $this->domain = array_pop($parts);
-        $this->localPart = implode('@', $parts);
+        $parts = Strings::split($emailAddress, '~@~');
+        $domain = array_pop($parts);
+        $localPart = implode('@', $parts);
+
+        return new static($domain, $localPart);
+    }
+
+    /**
+     * @param string $domain
+     * @param string $localPart
+     * @return static
+     * @throws InvalidEmailAddressException
+     */
+    public static function fromDomainAndLocalPart(string $domain, string $localPart): self
+    {
+        $emailAddress = $localPart . '@' . $domain;
+        if (!Validators::isEmail($emailAddress)) {
+            throw new InvalidEmailAddressException($emailAddress);
+        }
+
+        return new static($domain, $localPart);
     }
 
     /**

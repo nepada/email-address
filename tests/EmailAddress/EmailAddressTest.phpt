@@ -20,33 +20,86 @@ class EmailAddressTest extends TestCase
     /**
      * @dataProvider getValidEmailAddresses
      * @param string $value
-     * @param string $localPart
-     * @param string $domain
-     * @param string $normalizedValue
-     * @param string $lowercaseValue
+     * @param string $expectedLocalPart
+     * @param string $expectedDomain
+     * @param string $expectedNormalizedValue
+     * @param string $expectedLowercaseValue
      */
-    public function testValidEmailAddress(string $value, string $localPart, string $domain, string $normalizedValue, string $lowercaseValue): void
+    public function testValidEmailAddressFromString(
+        string $value,
+        string $expectedLocalPart,
+        string $expectedDomain,
+        string $expectedNormalizedValue,
+        string $expectedLowercaseValue
+    ): void
     {
-        $emailAddress = new EmailAddress($value);
+        $emailAddress = EmailAddress::fromString($value);
 
         Assert::same($value, (string) $emailAddress);
+        Assert::same($value, $emailAddress->toString());
         Assert::same($value, $emailAddress->getOriginalValue());
 
-        Assert::same($domain, $emailAddress->getDomain());
-        Assert::same($localPart, $emailAddress->getLocalPart());
-        Assert::same($normalizedValue, $emailAddress->getValue());
-        Assert::same($lowercaseValue, $emailAddress->getLowercaseValue());
+        Assert::same($expectedDomain, $emailAddress->getDomain());
+        Assert::same($expectedLocalPart, $emailAddress->getLocalPart());
+        Assert::same($expectedNormalizedValue, $emailAddress->getValue());
+        Assert::same($expectedLowercaseValue, $emailAddress->getLowercaseValue());
+    }
+
+    /**
+     * @dataProvider getValidEmailAddresses
+     * @param string $localPart
+     * @param string $domain
+     * @param string $expectedLocalPart
+     * @param string $expectedDomain
+     * @param string $expectedNormalizedValue
+     * @param string $expectedLowercaseValue
+     */
+    public function testValidEmailAddressFromDomainAndLocalPart(
+        string $localPart,
+        string $domain,
+        string $expectedLocalPart,
+        string $expectedDomain,
+        string $expectedNormalizedValue,
+        string $expectedLowercaseValue
+    ): void
+    {
+        $emailAddress = EmailAddress::fromDomainAndLocalPart($domain, $localPart);
+        $value = $localPart . '@' . $domain;
+
+        Assert::same($value, (string) $emailAddress);
+        Assert::same($value, $emailAddress->toString());
+        Assert::same($value, $emailAddress->getOriginalValue());
+
+        Assert::same($expectedDomain, $emailAddress->getDomain());
+        Assert::same($expectedLocalPart, $emailAddress->getLocalPart());
+        Assert::same($expectedNormalizedValue, $emailAddress->getValue());
+        Assert::same($expectedLowercaseValue, $emailAddress->getLowercaseValue());
     }
 
     /**
      * @dataProvider getInvalidEmailAddresses
      * @param string $value
      */
-    public function testInvalidEmailAddress(string $value): void
+    public function testInvalidEmailAddressFromString(string $value): void
     {
         Assert::exception(
             function () use ($value): void {
-                new EmailAddress($value);
+                EmailAddress::fromString($value);
+            },
+            InvalidEmailAddressException::class
+        );
+    }
+
+    /**
+     * @dataProvider getInvalidEmailAddressParts
+     * @param string $domain
+     * @param string $localPart
+     */
+    public function testInvalidEmailAddressFromDomainAndLocalPart(string $domain, string $localPart): void
+    {
+        Assert::exception(
+            function () use ($domain, $localPart): void {
+                EmailAddress::fromDomainAndLocalPart($domain, $localPart);
             },
             InvalidEmailAddressException::class
         );
@@ -60,24 +113,30 @@ class EmailAddressTest extends TestCase
         return [
             [
                 'value' => 'Simple-example@Example.COM',
+                'domain' => 'Example.COM',
                 'localPart' => 'Simple-example',
-                'domain' => 'example.com',
-                'normalizedValue' => 'Simple-example@example.com',
-                'lowercaseValue' => 'simple-example@example.com',
+                'expectedLocalPart' => 'Simple-example',
+                'expectedDomain' => 'example.com',
+                'expectedNormalizedValue' => 'Simple-example@example.com',
+                'expectedLowercaseValue' => 'simple-example@example.com',
             ],
             [
                 'value' => 'Real.example+suffix@HÁČKYčárky.cz',
+                'domain' => 'HÁČKYčárky.cz',
                 'localPart' => 'Real.example+suffix',
-                'domain' => 'xn--hkyrky-ptac70bc.cz',
-                'normalizedValue' => 'Real.example+suffix@xn--hkyrky-ptac70bc.cz',
-                'lowercaseValue' => 'real.example+suffix@xn--hkyrky-ptac70bc.cz',
+                'expectedLocalPart' => 'Real.example+suffix',
+                'expectedDomain' => 'xn--hkyrky-ptac70bc.cz',
+                'expectedNormalizedValue' => 'Real.example+suffix@xn--hkyrky-ptac70bc.cz',
+                'expectedLowercaseValue' => 'real.example+suffix@xn--hkyrky-ptac70bc.cz',
             ],
             [
                 'value' => '"very.(),:;<>[]\".VERY.\"very@\\ \"very\".unusual"@strange.example.com',
-                'localPart' => '"very.(),:;<>[]\".VERY.\"very@\\ \"very\".unusual"',
                 'domain' => 'strange.example.com',
-                'normalizedValue' => '"very.(),:;<>[]\".VERY.\"very@\\ \"very\".unusual"@strange.example.com',
-                'lowercaseValue' => '"very.(),:;<>[]\".very.\"very@\\ \"very\".unusual"@strange.example.com',
+                'localPart' => '"very.(),:;<>[]\".VERY.\"very@\\ \"very\".unusual"',
+                'expectedLocalPart' => '"very.(),:;<>[]\".VERY.\"very@\\ \"very\".unusual"',
+                'expectedDomain' => 'strange.example.com',
+                'expectedNormalizedValue' => '"very.(),:;<>[]\".VERY.\"very@\\ \"very\".unusual"@strange.example.com',
+                'expectedLowercaseValue' => '"very.(),:;<>[]\".very.\"very@\\ \"very\".unusual"@strange.example.com',
             ],
         ];
     }
@@ -95,6 +154,44 @@ class EmailAddressTest extends TestCase
             ['value' => 'just"not"right@example.com'],
             ['value' => 'this is"not\allowed@example.com'],
             ['value' => 'this\ still\"not\\allowed@example.com'],
+        ];
+    }
+
+    /**
+     * @return mixed[]
+     */
+    protected function getInvalidEmailAddressParts(): array
+    {
+        return [
+            [
+                'localPart' => '',
+                'domain' => 'example.com',
+            ],
+            [
+
+                'localPart' => 'example',
+                'domain' => '',
+            ],
+            [
+                'localPart' => 'řehoř',
+                'domain' => 'example.com',
+            ],
+            [
+                'localPart' => 'john..doe',
+                'domain' => 'example.com',
+            ],
+            [
+                'localPart' => 'just"not"right',
+                'domain' => 'example.com',
+            ],
+            [
+                'localPart' => 'this is"not\allowed',
+                'domain' => 'example.com',
+            ],
+            [
+                'localPart' => 'this\ still\"not\\allowed',
+                'domain' => 'example.com',
+            ],
         ];
     }
 
