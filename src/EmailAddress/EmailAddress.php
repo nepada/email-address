@@ -89,9 +89,14 @@ class EmailAddress
         return $this->localPart . '@' . $this->domain;
     }
 
-    public function __toString(): string
+    public function toString(): string
     {
         return $this->getOriginalValue();
+    }
+
+    public function __toString(): string
+    {
+        return $this->toString();
     }
 
 }
