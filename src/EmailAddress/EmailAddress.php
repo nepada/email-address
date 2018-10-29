@@ -7,7 +7,7 @@ use Nette;
 use Nette\Utils\Strings;
 use Nette\Utils\Validators;
 
-class EmailAddress
+final class EmailAddress
 {
 
     use Nette\SmartObject;
