@@ -22,13 +22,15 @@ Usage
 
 #### Creating value object
 ```php
-$emailAddress = new Nepada\EmailAddress\EmailAddress('Real.example+suffix@HÁČKYčárky.cz');
+$emailAddress = Nepada\EmailAddress\EmailAddress::fromString('Real.example+suffix@HÁČKYčárky.cz');
+$emailAddress = Nepada\EmailAddress\EmailAddress::fromDomainAndLocalPart('HÁČKYčárky.cz', 'Real.example+suffix');
 ```
 `Nepada\EmailAddress\InvalidEmailAddressException` is thrown in case of invalid input value.
 
 #### Converting back to string
 ```php
 echo((string) $emailAddress); // Real.example+suffix@HÁČKYčárky.cz
+echo($emailAddress->toString()); // Real.example+suffix@HÁČKYčárky.cz
 echo($emailAddress->getOriginalValue()); // Real.example+suffix@HÁČKYčárky.cz
 ```
 
