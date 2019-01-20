@@ -6,9 +6,7 @@ includes:
 
 parameters:
     exceptionRules:
-        checkedExceptions:
-            - RuntimeException
-            - Nepada\EmailAddress\InvalidEmailAddressException
-        ignoredExceptions:
+        uncheckedExceptions:
             - LogicException
             - Nette\InvalidStateException
+            - Nepada\EmailAddress\FailedToNormalizeDomainException

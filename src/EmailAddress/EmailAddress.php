@@ -24,11 +24,6 @@ final class EmailAddress
         $this->localPart = $localPart;
     }
 
-    /**
-     * @param string $emailAddress
-     * @return static
-     * @throws InvalidEmailAddressException
-     */
     public static function fromString(string $emailAddress): self
     {
         if (!Validators::isEmail($emailAddress)) {
@@ -42,12 +37,6 @@ final class EmailAddress
         return new static($domain, $localPart);
     }
 
-    /**
-     * @param string $domain
-     * @param string $localPart
-     * @return static
-     * @throws InvalidEmailAddressException
-     */
     public static function fromDomainAndLocalPart(string $domain, string $localPart): self
     {
         $emailAddress = $localPart . '@' . $domain;
