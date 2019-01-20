@@ -21,7 +21,8 @@
     },
     "require-dev": {
         "nette/tester": "^2.1",
-        "xificurk/phpstan-shim": "^0.11"
+        "xificurk/phpstan-shim": "^0.11",
+        "jakub-onderka/php-parallel-lint": "^1.0"
     },
     "autoload": {
         "psr-4": {
