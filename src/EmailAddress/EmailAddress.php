@@ -26,7 +26,7 @@ final class EmailAddress
 
     public static function fromString(string $emailAddress): self
     {
-        if (!Validators::isEmail($emailAddress)) {
+        if (! Validators::isEmail($emailAddress)) {
             throw new InvalidEmailAddressException($emailAddress);
         }
 
@@ -40,7 +40,7 @@ final class EmailAddress
     public static function fromDomainAndLocalPart(string $domain, string $localPart): self
     {
         $emailAddress = $localPart . '@' . $domain;
-        if (!Validators::isEmail($emailAddress)) {
+        if (! Validators::isEmail($emailAddress)) {
             throw new InvalidEmailAddressException($emailAddress);
         }
 
