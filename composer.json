@@ -27,7 +27,7 @@
         "phpstan/phpstan-nette": "^0.12.0",
         "damejidlo/phpstan-nette-tester": "^0.2.0",
         "jakub-onderka/php-parallel-lint": "^1.0",
-        "nepada/coding-standard": "^6.3.0"
+        "nepada/coding-standard": "^7.0.0"
     },
     "autoload": {
         "psr-4": {

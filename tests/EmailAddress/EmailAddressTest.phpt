@@ -86,7 +86,7 @@ class EmailAddressTest extends TestCase
             function () use ($value): void {
                 EmailAddress::fromString($value);
             },
-            InvalidEmailAddressException::class
+            InvalidEmailAddressException::class,
         );
     }
 
@@ -101,7 +101,7 @@ class EmailAddressTest extends TestCase
             function () use ($domain, $localPart): void {
                 EmailAddress::fromDomainAndLocalPart($domain, $localPart);
             },
-            InvalidEmailAddressException::class
+            InvalidEmailAddressException::class,
         );
     }
 
