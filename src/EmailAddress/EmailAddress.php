@@ -12,11 +12,9 @@ final class EmailAddress
 
     use Nette\SmartObject;
 
-    /** @var string */
-    private $localPart;
+    private string $localPart;
 
-    /** @var string */
-    private $domain;
+    private string $domain;
 
     private function __construct(string $domain, string $localPart)
     {
