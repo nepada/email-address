@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace NepadaTests\EmailAddress;
 
 use Nepada\EmailAddress\CaseInsensitiveEmailAddress;
+use Tester\Assert;
 
 require_once __DIR__ . '/../bootstrap.php';
 
@@ -60,6 +61,15 @@ class CaseInsensitiveEmailAddressTest extends EmailAddressTestCase
                 'expectedValue' => '"very.(),:;<>[]\".very.\"very@\\ \"very\".unusual"@strange.example.com',
             ],
         ];
+    }
+
+    public function testToCaseInsensitiveEmailAddress(): void
+    {
+        $rawValue = 'Foo@Example.com';
+        $emailAddress = $this->createEmailAddressFromString($rawValue)->toRfcEmailAddress();
+
+        Assert::same($rawValue, $emailAddress->toString());
+        Assert::same('Foo@example.com', $emailAddress->getValue());
     }
 
 }

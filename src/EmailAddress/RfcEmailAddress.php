@@ -11,4 +11,9 @@ namespace Nepada\EmailAddress;
 final class RfcEmailAddress extends EmailAddress
 {
 
+    public function toCaseInsensitiveEmailAddress(): CaseInsensitiveEmailAddress
+    {
+        return CaseInsensitiveEmailAddress::fromString($this->toString());
+    }
+
 }

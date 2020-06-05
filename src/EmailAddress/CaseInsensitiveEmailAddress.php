@@ -26,4 +26,9 @@ final class CaseInsensitiveEmailAddress extends EmailAddress
         return [$normalizedDomain, $normalizedLocalPart];
     }
 
+    public function toRfcEmailAddress(): RfcEmailAddress
+    {
+        return RfcEmailAddress::fromString($this->toString());
+    }
+
 }
