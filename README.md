@@ -20,34 +20,37 @@ $ composer require nepada/email-address
 Usage
 -----
 
+This package provides two implementations of email address value object:
+1) `RfcEmailAddress` - it adheres to RFCs and treats local part of email address as case sensitive. The domain part is normalized to lower case ASCII representation.
+2) `CaseInsensitiveEmailAddress` - the only difference from `RfcEmailAddress` is that local part is considered case insensitive and normalized to lower case.
+
+It is up to you to decide which implementation suites your needs. If you want to support both implementations, use `Nepada\EmailAddress\EmailAddress` as a typehint. You can also cast one representation to the other using `RfcEmailAddress::toCaseInsensitiveEmailAddress()` and `CaseInsensitiveEmailAddress::toRfcEmailAddress()`.  
+
 #### Creating value object
 ```php
-$emailAddress = Nepada\EmailAddress\EmailAddress::fromString('Real.example+suffix@HÁČKYčárky.cz');
-$emailAddress = Nepada\EmailAddress\EmailAddress::fromDomainAndLocalPart('HÁČKYčárky.cz', 'Real.example+suffix');
+$rfcEmailAddress = Nepada\EmailAddress\RfcEmailAddress::fromString('Real.example+suffix@HÁČKYčárky.cz');
+$rfcEmailAddress = Nepada\EmailAddress\RfcEmailAddress::fromDomainAndLocalPart('HÁČKYčárky.cz', 'Real.example+suffix');
+
+$ciEmailAddress = Nepada\EmailAddress\CaseInsensitiveEmailAddress::fromString('Real.example+suffix@HÁČKYčárky.cz');
+$ciEmailAddress = Nepada\EmailAddress\CaseInsensitiveEmailAddress::fromDomainAndLocalPart('HÁČKYčárky.cz', 'Real.example+suffix');
 ```
 `Nepada\EmailAddress\InvalidEmailAddressException` is thrown in case of invalid input value.
 
 #### Converting back to string
+Casting the value object to string, will result in the original (non-canonical) string representation of email address:
 ```php
 echo((string) $emailAddress); // Real.example+suffix@HÁČKYčárky.cz
 echo($emailAddress->toString()); // Real.example+suffix@HÁČKYčárky.cz
-echo($emailAddress->getOriginalValue()); // Real.example+suffix@HÁČKYčárky.cz
 ```
 
-#### Email address with normalized domain part
+#### Canonical string representation of email address
 ```php
-echo($emailAddress->getValue()); // Real.example+suffix@xn--hkyrky-ptac70bc.cz
+echo($emailAddress->getValue()); // real.example+suffix@xn--hkyrky-ptac70bc.cz
 ```
 
-#### Whole email address normalized and lowercased
+#### Getting normalized local and domain part separately
 ```php
-echo($emailAddress->getLowercaseValue()); // real.example+suffix@xn--hkyrky-ptac70bc.cz
-```
-Note: This is not RFC 5321 compliant, however in practice all major mail providers treat local part in case insensitive manner.
-
-#### Getting local and domain part separately
-```php
-echo($emailAddress->getLocalPart()); // Real.example+suffix
+echo($emailAddress->getLocalPart()); // real.example+suffix
 echo($emailAddress->getDomain()); // xn--hkyrky-ptac70bc.cz
 ```
 
