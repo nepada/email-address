@@ -25,6 +25,11 @@ abstract class EmailAddress
         $this->localPart = $localPart;
     }
 
+    /**
+     * @param string $emailAddress
+     * @return static
+     * @throws InvalidEmailAddressException
+     */
     public static function fromString(string $emailAddress): self
     {
         if (! Validators::isEmail($emailAddress)) {
@@ -44,6 +49,12 @@ abstract class EmailAddress
         return new $emailAddressClass($emailAddress, $normalizedDomain, $normalizedLocalPart);
     }
 
+    /**
+     * @param string $domain
+     * @param string $localPart
+     * @return static
+     * @throws InvalidEmailAddressException
+     */
     public static function fromDomainAndLocalPart(string $domain, string $localPart): self
     {
         return static::fromString($localPart . '@' . $domain);
