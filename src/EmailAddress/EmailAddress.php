@@ -37,6 +37,8 @@ abstract class EmailAddress
         return RfcEmailAddress::fromDomainAndLocalPart($domain, $localPart);
     }
 
+    abstract public function equals(EmailAddress $other): bool;
+
     /**
      * Normalized local part of email address
      *

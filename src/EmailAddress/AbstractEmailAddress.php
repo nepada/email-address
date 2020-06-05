@@ -94,4 +94,9 @@ abstract class AbstractEmailAddress extends EmailAddress
         return $this->toString();
     }
 
+    public function equals(EmailAddress $other): bool
+    {
+        return $this->getValue() === $other->getValue();
+    }
+
 }

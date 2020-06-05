@@ -26,6 +26,11 @@ abstract class EmailAddressTestCase extends TestCase
     abstract protected function getValidEmailAddressesParts(): array;
 
     /**
+     * @return mixed[]
+     */
+    abstract protected function getEmailAddressesForEqualityCheck(): array;
+
+    /**
      * @dataProvider getValidEmailAddresses
      * @param string $rawValue
      * @param string $expectedLocalPart
@@ -153,6 +158,19 @@ abstract class EmailAddressTestCase extends TestCase
                 'domain' => 'example.com',
             ],
         ];
+    }
+
+    /**
+     * @dataProvider getEmailAddressesForEqualityCheck
+     * @param string $rawValue
+     * @param EmailAddress $other
+     * @param bool $isEqual
+     */
+    public function testEquals(string $rawValue, EmailAddress $other, bool $isEqual): void
+    {
+        $emailAddress = $this->createEmailAddressFromString($rawValue);
+        Assert::same($isEqual, $emailAddress->equals($other));
+        Assert::same($isEqual, $other->equals($emailAddress));
     }
 
     /**

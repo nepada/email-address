@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace NepadaTests\EmailAddress;
 
 use Nepada\EmailAddress\CaseInsensitiveEmailAddress;
+use Nepada\EmailAddress\RfcEmailAddress;
 use Tester\Assert;
 
 require_once __DIR__ . '/../bootstrap.php';
@@ -59,6 +60,35 @@ class CaseInsensitiveEmailAddressTest extends EmailAddressTestCase
                 'expectedLocalPart' => '"very.(),:;<>[]\".very.\"very@\\ \"very\".unusual"',
                 'expectedDomain' => 'strange.example.com',
                 'expectedValue' => '"very.(),:;<>[]\".very.\"very@\\ \"very\".unusual"@strange.example.com',
+            ],
+        ];
+    }
+
+    /**
+     * @return mixed[]
+     */
+    protected function getEmailAddressesForEqualityCheck(): array
+    {
+        return [
+            [
+                'rawValue' => 'Foo@HÁČKYčárky.cz',
+                'other' => CaseInsensitiveEmailAddress::fromString('foo@xn--hkyrky-ptac70bc.cz'),
+                'isEqual' => true,
+            ],
+            [
+                'rawValue' => 'EXAMPLE@example.com',
+                'other' => CaseInsensitiveEmailAddress::fromString('example@EXAMPLE.com'),
+                'isEqual' => true,
+            ],
+            [
+                'rawValue' => 'EXAMPLE@example.com',
+                'other' => CaseInsensitiveEmailAddress::fromString('example+foo@EXAMPLE.com'),
+                'isEqual' => false,
+            ],
+            [
+                'rawValue' => 'EXAMPLE@EXAMPLE.com',
+                'other' => RfcEmailAddress::fromString('example@EXAMPLE.com'),
+                'isEqual' => true,
             ],
         ];
     }
