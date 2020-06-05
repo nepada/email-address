@@ -37,7 +37,7 @@ class EmailAddressTest extends TestCase
 
         Assert::same($value, (string) $emailAddress);
         Assert::same($value, $emailAddress->toString());
-        Assert::same($value, $emailAddress->getOriginalValue());
+        Assert::same($value, @$emailAddress->getOriginalValue());
 
         Assert::same($expectedDomain, $emailAddress->getDomain());
         Assert::same($expectedLocalPart, $emailAddress->getLocalPart());
@@ -68,7 +68,7 @@ class EmailAddressTest extends TestCase
 
         Assert::same($value, (string) $emailAddress);
         Assert::same($value, $emailAddress->toString());
-        Assert::same($value, $emailAddress->getOriginalValue());
+        Assert::same($value, @$emailAddress->getOriginalValue());
 
         Assert::same($expectedDomain, $emailAddress->getDomain());
         Assert::same($expectedLocalPart, $emailAddress->getLocalPart());

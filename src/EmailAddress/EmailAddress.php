@@ -117,20 +117,30 @@ abstract class EmailAddress
     }
 
     /**
-     * Original string representation of email address
-     *
+     * @deprecated use toString() instead
      * @return string
      */
     public function getOriginalValue(): string
     {
+        trigger_error('getOriginalValue() is deprecated, use toString() instead.', E_USER_DEPRECATED);
+        return $this->toString();
+    }
+
+    /**
+     * Should return the original string representation of email address
+     *
+     * @return string
+     */
+    public function toString(): string
+    {
         return $this->rawValue;
     }
 
-    public function toString(): string
-    {
-        return $this->getOriginalValue();
-    }
-
+    /**
+     * Alias for `toString()`
+     *
+     * @return string
+     */
     public function __toString(): string
     {
         return $this->toString();
