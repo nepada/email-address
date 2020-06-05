@@ -78,24 +78,4 @@ abstract class EmailAddress
      */
     abstract public function __toString(): string;
 
-    /**
-     * @deprecated use CaseInsensitiveEmailAddress::getValue() instead
-     * @return string
-     */
-    public function getLowercaseValue(): string
-    {
-        trigger_error('getLowercaseValue() is deprecated, use CaseInsensitiveEmailAddress::getValue() instead.', E_USER_DEPRECATED);
-        return CaseInsensitiveEmailAddress::fromString($this->toString())->getValue();
-    }
-
-    /**
-     * @deprecated use toString() instead
-     * @return string
-     */
-    public function getOriginalValue(): string
-    {
-        trigger_error('getOriginalValue() is deprecated, use toString() instead.', E_USER_DEPRECATED);
-        return $this->toString();
-    }
-
 }
