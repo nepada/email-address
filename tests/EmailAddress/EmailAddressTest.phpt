@@ -33,7 +33,7 @@ class EmailAddressTest extends TestCase
         string $expectedLowercaseValue
     ): void
     {
-        $emailAddress = EmailAddress::fromString($value);
+        $emailAddress = @EmailAddress::fromString($value);
 
         Assert::same($value, (string) $emailAddress);
         Assert::same($value, $emailAddress->toString());
@@ -63,7 +63,7 @@ class EmailAddressTest extends TestCase
         string $expectedLowercaseValue
     ): void
     {
-        $emailAddress = EmailAddress::fromDomainAndLocalPart($domain, $localPart);
+        $emailAddress = @EmailAddress::fromDomainAndLocalPart($domain, $localPart);
         $value = $localPart . '@' . $domain;
 
         Assert::same($value, (string) $emailAddress);
@@ -84,7 +84,7 @@ class EmailAddressTest extends TestCase
     {
         Assert::exception(
             function () use ($value): void {
-                EmailAddress::fromString($value);
+                @EmailAddress::fromString($value);
             },
             InvalidEmailAddressException::class,
         );
@@ -99,7 +99,7 @@ class EmailAddressTest extends TestCase
     {
         Assert::exception(
             function () use ($domain, $localPart): void {
-                EmailAddress::fromDomainAndLocalPart($domain, $localPart);
+                @EmailAddress::fromDomainAndLocalPart($domain, $localPart);
             },
             InvalidEmailAddressException::class,
         );

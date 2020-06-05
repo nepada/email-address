@@ -10,7 +10,7 @@ use Nette\Utils\Strings;
  * - domain part is normalized to lowercase ASCII representation
  * - local part is normalized to lowercase - this is not compliant with RFC, but commonly used in practice
  */
-final class CaseInsensitiveEmailAddress extends EmailAddress
+final class CaseInsensitiveEmailAddress extends AbstractEmailAddress
 {
 
     /**

@@ -3,75 +3,38 @@ declare(strict_types = 1);
 
 namespace Nepada\EmailAddress;
 
-use Nette;
-use Nette\Utils\Validators;
-
 abstract class EmailAddress
 {
 
-    use Nette\SmartObject;
-
-    private string $rawValue;
-
-    private string $localPart;
-
-    private string $domain;
-
-    private function __construct(string $rawValue, string $domain, string $localPart)
-    {
-        $this->rawValue = $rawValue;
-        $this->domain = $domain;
-        $this->localPart = $localPart;
-    }
-
     /**
+     * @deprecated
      * @param string $emailAddress
-     * @return static
+     * @return EmailAddress
      * @throws InvalidEmailAddressException
      */
     public static function fromString(string $emailAddress): self
     {
-        if (! Validators::isEmail($emailAddress)) {
-            throw new InvalidEmailAddressException($emailAddress);
-        }
-
-        $parts = explode('@', $emailAddress);
-        $domain = (string) array_pop($parts);
-        $localPart = implode('@', $parts);
-        [$normalizedDomain, $normalizedLocalPart] = static::normalizeDomainAndLocalPart($domain, $localPart);
-
-        $emailAddressClass = static::class;
-        if ($emailAddressClass === self::class) { // BC
-            $emailAddressClass = RfcEmailAddress::class;
-        }
-
-        return new $emailAddressClass($emailAddress, $normalizedDomain, $normalizedLocalPart);
+        trigger_error(
+            'EmailAddress::fromString() is deprecated, use named constructor of a specific implementation (RfcEmailAddress|CaseInsensitiveEmailAddress)',
+            E_USER_DEPRECATED,
+        );
+        return RfcEmailAddress::fromString($emailAddress);
     }
 
     /**
+     * @deprecated
      * @param string $domain
      * @param string $localPart
-     * @return static
+     * @return EmailAddress
      * @throws InvalidEmailAddressException
      */
     public static function fromDomainAndLocalPart(string $domain, string $localPart): self
     {
-        return static::fromString($localPart . '@' . $domain);
-    }
-
-    /**
-     * @param string $domain
-     * @param string $localPart
-     * @return string[]
-     */
-    protected static function normalizeDomainAndLocalPart(string $domain, string $localPart): array
-    {
-        $normalizedDomain = idn_to_ascii($domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
-        if ($normalizedDomain === false) {
-            throw new FailedToNormalizeDomainException($domain);
-        }
-
-        return [$normalizedDomain, $localPart];
+        trigger_error(
+            'EmailAddress::fromDomainAndLocalPart() is deprecated, use named constructor of a specific implementation (RfcEmailAddress|CaseInsensitiveEmailAddress)',
+            E_USER_DEPRECATED,
+        );
+        return RfcEmailAddress::fromDomainAndLocalPart($domain, $localPart);
     }
 
     /**
@@ -79,30 +42,35 @@ abstract class EmailAddress
      *
      * @return string
      */
-    public function getLocalPart(): string
-    {
-        return $this->localPart;
-    }
+    abstract public function getLocalPart(): string;
 
     /**
      * Normalized domain part of email address
      *
      * @return string
      */
-    public function getDomain(): string
-    {
-        return $this->domain;
-    }
+    abstract public function getDomain(): string;
 
     /**
      * Canonical string representation of email address
      *
      * @return string
      */
-    public function getValue(): string
-    {
-        return $this->localPart . '@' . $this->domain;
-    }
+    abstract public function getValue(): string;
+
+    /**
+     * Should return the original string representation of email address
+     *
+     * @return string
+     */
+    abstract public function toString(): string;
+
+    /**
+     * Alias for `toString()`
+     *
+     * @return string
+     */
+    abstract public function __toString(): string;
 
     /**
      * @deprecated use CaseInsensitiveEmailAddress::getValue() instead
@@ -121,26 +89,6 @@ abstract class EmailAddress
     public function getOriginalValue(): string
     {
         trigger_error('getOriginalValue() is deprecated, use toString() instead.', E_USER_DEPRECATED);
-        return $this->toString();
-    }
-
-    /**
-     * Should return the original string representation of email address
-     *
-     * @return string
-     */
-    public function toString(): string
-    {
-        return $this->rawValue;
-    }
-
-    /**
-     * Alias for `toString()`
-     *
-     * @return string
-     */
-    public function __toString(): string
-    {
         return $this->toString();
     }
 

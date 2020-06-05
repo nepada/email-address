@@ -8,7 +8,7 @@ namespace Nepada\EmailAddress;
  * - domain part is normalized to lowercase ASCII representation
  * - local part is treated as **case sensitive**
  */
-final class RfcEmailAddress extends EmailAddress
+final class RfcEmailAddress extends AbstractEmailAddress
 {
 
     public function toCaseInsensitiveEmailAddress(): CaseInsensitiveEmailAddress
