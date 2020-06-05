@@ -3,8 +3,12 @@ declare(strict_types = 1);
 
 namespace Nepada\EmailAddress;
 
+use Nette\SmartObject;
+
 abstract class EmailAddress
 {
+
+    use SmartObject;
 
     /**
      * @deprecated

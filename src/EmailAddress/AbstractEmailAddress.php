@@ -3,13 +3,10 @@ declare(strict_types = 1);
 
 namespace Nepada\EmailAddress;
 
-use Nette;
 use Nette\Utils\Validators;
 
 abstract class AbstractEmailAddress extends EmailAddress
 {
-
-    use Nette\SmartObject;
 
     private string $rawValue;
 
