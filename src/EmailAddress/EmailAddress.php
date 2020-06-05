@@ -7,17 +7,20 @@ use Nette;
 use Nette\Utils\Strings;
 use Nette\Utils\Validators;
 
-final class EmailAddress
+abstract class EmailAddress
 {
 
     use Nette\SmartObject;
+
+    private string $rawValue;
 
     private string $localPart;
 
     private string $domain;
 
-    private function __construct(string $domain, string $localPart)
+    private function __construct(string $rawValue, string $domain, string $localPart)
     {
+        $this->rawValue = $rawValue;
         $this->domain = $domain;
         $this->localPart = $localPart;
     }
@@ -28,25 +31,41 @@ final class EmailAddress
             throw new InvalidEmailAddressException($emailAddress);
         }
 
-        $parts = Strings::split($emailAddress, '~@~');
-        $domain = array_pop($parts);
+        $parts = explode('@', $emailAddress);
+        $domain = (string) array_pop($parts);
         $localPart = implode('@', $parts);
+        [$normalizedDomain, $normalizedLocalPart] = static::normalizeDomainAndLocalPart($domain, $localPart);
 
-        return new static($domain, $localPart);
+        $emailAddressClass = static::class;
+        if ($emailAddressClass === self::class) { // BC
+            $emailAddressClass = RfcEmailAddress::class;
+        }
+
+        return new $emailAddressClass($emailAddress, $normalizedDomain, $normalizedLocalPart);
     }
 
     public static function fromDomainAndLocalPart(string $domain, string $localPart): self
     {
-        $emailAddress = $localPart . '@' . $domain;
-        if (! Validators::isEmail($emailAddress)) {
-            throw new InvalidEmailAddressException($emailAddress);
-        }
-
-        return new static($domain, $localPart);
+        return static::fromString($localPart . '@' . $domain);
     }
 
     /**
-     * Local part of the email address as it was originally passed (with preserved case).
+     * @param string $domain
+     * @param string $localPart
+     * @return string[]
+     */
+    protected static function normalizeDomainAndLocalPart(string $domain, string $localPart): array
+    {
+        $normalizedDomain = idn_to_ascii($domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
+        if ($normalizedDomain === false) {
+            throw new FailedToNormalizeDomainException($domain);
+        }
+
+        return [$normalizedDomain, $localPart];
+    }
+
+    /**
+     * Normalized local part of email address
      *
      * @return string
      */
@@ -56,28 +75,23 @@ final class EmailAddress
     }
 
     /**
-     * Normalized (lowercase) domain part of the email address.
+     * Normalized domain part of email address
      *
      * @return string
      */
     public function getDomain(): string
     {
-        $normalizedDomain = idn_to_ascii($this->domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
-        if ($normalizedDomain === false) {
-            throw new FailedToNormalizeDomainException($this->domain);
-        }
-
-        return $normalizedDomain;
+        return $this->domain;
     }
 
     /**
-     * Email address with normalized (lowercase) domain part.
+     * Canonical string representation of email address
      *
      * @return string
      */
     public function getValue(): string
     {
-        return $this->localPart . '@' . $this->getDomain();
+        return $this->localPart . '@' . $this->domain;
     }
 
     /**
@@ -88,17 +102,17 @@ final class EmailAddress
      */
     public function getLowercaseValue(): string
     {
-        return Strings::lower($this->localPart) . '@' . $this->getDomain();
+        return Strings::lower($this->localPart) . '@' . $this->domain;
     }
 
     /**
-     * Email address as it was originally passed (with preserved case).
+     * Original string representation of email address
      *
      * @return string
      */
     public function getOriginalValue(): string
     {
-        return $this->localPart . '@' . $this->domain;
+        return $this->rawValue;
     }
 
     public function toString(): string
