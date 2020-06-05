@@ -4,7 +4,6 @@ declare(strict_types = 1);
 namespace Nepada\EmailAddress;
 
 use Nette;
-use Nette\Utils\Strings;
 use Nette\Utils\Validators;
 
 abstract class EmailAddress
@@ -106,14 +105,13 @@ abstract class EmailAddress
     }
 
     /**
-     * Email address completely converted to lowercase.
-     * Note: This is not RFC 5321 compliant, however in practice all major mail providers treat local part in case insensitive manner.
-     *
+     * @deprecated use CaseInsensitiveEmailAddress::getValue() instead
      * @return string
      */
     public function getLowercaseValue(): string
     {
-        return Strings::lower($this->localPart) . '@' . $this->domain;
+        trigger_error('getLowercaseValue() is deprecated, use CaseInsensitiveEmailAddress::getValue() instead.', E_USER_DEPRECATED);
+        return CaseInsensitiveEmailAddress::fromString($this->toString())->getValue();
     }
 
     /**

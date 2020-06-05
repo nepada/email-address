@@ -42,7 +42,7 @@ class EmailAddressTest extends TestCase
         Assert::same($expectedDomain, $emailAddress->getDomain());
         Assert::same($expectedLocalPart, $emailAddress->getLocalPart());
         Assert::same($expectedNormalizedValue, $emailAddress->getValue());
-        Assert::same($expectedLowercaseValue, $emailAddress->getLowercaseValue());
+        Assert::same($expectedLowercaseValue, @$emailAddress->getLowercaseValue());
     }
 
     /**
@@ -73,7 +73,7 @@ class EmailAddressTest extends TestCase
         Assert::same($expectedDomain, $emailAddress->getDomain());
         Assert::same($expectedLocalPart, $emailAddress->getLocalPart());
         Assert::same($expectedNormalizedValue, $emailAddress->getValue());
-        Assert::same($expectedLowercaseValue, $emailAddress->getLowercaseValue());
+        Assert::same($expectedLowercaseValue, @$emailAddress->getLowercaseValue());
     }
 
     /**
