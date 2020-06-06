@@ -29,7 +29,7 @@ abstract class AbstractEmailAddress implements EmailAddress
      * @return static
      * @throws InvalidEmailAddressException
      */
-    public static function fromString(string $emailAddress): self
+    final public static function fromString(string $emailAddress): self
     {
         if (! Validators::isEmail($emailAddress)) {
             throw new InvalidEmailAddressException($emailAddress);
@@ -49,7 +49,7 @@ abstract class AbstractEmailAddress implements EmailAddress
      * @return static
      * @throws InvalidEmailAddressException
      */
-    public static function fromDomainAndLocalPart(string $domain, string $localPart): self
+    final public static function fromDomainAndLocalPart(string $domain, string $localPart): self
     {
         return static::fromString($localPart . '@' . $domain);
     }
@@ -69,32 +69,32 @@ abstract class AbstractEmailAddress implements EmailAddress
         return [$normalizedDomain, $localPart];
     }
 
-    public function getLocalPart(): string
+    final public function getLocalPart(): string
     {
         return $this->localPart;
     }
 
-    public function getDomain(): string
+    final public function getDomain(): string
     {
         return $this->domain;
     }
 
-    public function getValue(): string
+    final public function getValue(): string
     {
         return $this->localPart . '@' . $this->domain;
     }
 
-    public function toString(): string
+    final public function toString(): string
     {
         return $this->rawValue;
     }
 
-    public function __toString(): string
+    final public function __toString(): string
     {
         return $this->toString();
     }
 
-    public function equals(EmailAddress $other): bool
+    final public function equals(EmailAddress $other): bool
     {
         return $this->getValue() === $other->getValue();
     }
