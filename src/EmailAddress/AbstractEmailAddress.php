@@ -36,7 +36,7 @@ abstract class AbstractEmailAddress implements EmailAddress
         }
 
         $parts = explode('@', $emailAddress);
-        $domain = (string) array_pop($parts);
+        $domain = array_pop($parts);
         $localPart = implode('@', $parts);
         [$normalizedDomain, $normalizedLocalPart] = static::normalizeDomainAndLocalPart($domain, $localPart);
 
