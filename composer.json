@@ -17,6 +17,7 @@
     "require": {
         "php": ">=7.4.0",
         "ext-intl": "*",
+        "ext-mbstring": "*",
         "nette/utils": "^3.0@dev"
     },
     "require-dev": {
