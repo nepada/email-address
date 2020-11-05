@@ -1,7 +1,7 @@
 Email address value object
 ==========================
 
-[![Build Status](https://travis-ci.org/nepada/email-address.svg?branch=master)](https://travis-ci.org/nepada/email-address)
+[![Build Status](https://github.com/nepada/email-address/workflows/CI/badge.svg)](https://github.com/nepada/email-address/actions?query=workflow%3ACI+branch%3Amaster)
 [![Coverage Status](https://coveralls.io/repos/github/nepada/email-address/badge.svg?branch=master)](https://coveralls.io/github/nepada/email-address?branch=master)
 [![Downloads this Month](https://img.shields.io/packagist/dm/nepada/email-address.svg)](https://packagist.org/packages/nepada/email-address)
 [![Latest stable](https://img.shields.io/packagist/v/nepada/email-address.svg)](https://packagist.org/packages/nepada/email-address)
