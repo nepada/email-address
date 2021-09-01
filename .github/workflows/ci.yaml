@@ -19,6 +19,9 @@ jobs:
           - ''
           - '--prefer-stable'
           - '--prefer-stable --prefer-lowest'
+        include:
+          - php: 8.1
+            composer_args: ''
     name: PHP ${{ matrix.php }} ${{ matrix.composer_args }}
     steps:
       - uses: actions/checkout@v2
