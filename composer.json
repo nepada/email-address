@@ -18,7 +18,7 @@
         "php": ">=7.4.0 <8.2",
         "ext-intl": "*",
         "ext-mbstring": "*",
-        "nette/utils": "^3.0@dev"
+        "nette/utils": "^3.2@dev"
     },
     "require-dev": {
         "nette/tester": "2.4.1",
