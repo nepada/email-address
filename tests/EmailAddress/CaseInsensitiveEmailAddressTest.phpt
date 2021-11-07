@@ -35,7 +35,7 @@ class CaseInsensitiveEmailAddressTest extends EmailAddressTestCase
     }
 
     /**
-     * @return mixed[]
+     * @return array<int, array<string, string>>
      */
     protected function getValidEmailAddressesParts(): array
     {
