@@ -21,7 +21,7 @@
         "nette/utils": "^3.2@dev"
     },
     "require-dev": {
-        "nette/tester": "2.4.1",
+        "nette/tester": "2.4.2",
         "phpstan/phpstan": "1.4.6",
         "phpstan/phpstan-strict-rules": "1.1.0",
         "phpstan/phpstan-nette": "1.0.0",
