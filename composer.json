@@ -15,7 +15,7 @@
         }
     ],
     "require": {
-        "php": ">=7.4.0 <8.2",
+        "php": ">=7.4.0 <8.3",
         "ext-intl": "*",
         "ext-mbstring": "*",
         "nette/utils": "^3.2@dev"
