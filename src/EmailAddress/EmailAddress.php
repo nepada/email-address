@@ -13,7 +13,7 @@ interface EmailAddress
      */
     public static function fromString(string $emailAddress): self;
 
-    public function equals(EmailAddress $other): bool;
+    public function equals(self $other): bool;
 
     /**
      * Normalized local part of email address
