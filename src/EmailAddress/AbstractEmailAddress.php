@@ -11,11 +11,11 @@ abstract class AbstractEmailAddress implements EmailAddress
 
     use SmartObject;
 
-    private string $rawValue;
+    private readonly string $rawValue;
 
-    private string $localPart;
+    private readonly string $localPart;
 
-    private string $domain;
+    private readonly string $domain;
 
     final private function __construct(string $rawValue, string $domain, string $localPart)
     {
