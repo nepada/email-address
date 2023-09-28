@@ -25,11 +25,9 @@ abstract class AbstractEmailAddress implements EmailAddress
     }
 
     /**
-     * @param string $emailAddress
-     * @return static
      * @throws InvalidEmailAddressException
      */
-    final public static function fromString(string $emailAddress): self
+    final public static function fromString(string $emailAddress): static
     {
         if (! Validators::isEmail($emailAddress)) {
             throw new InvalidEmailAddressException($emailAddress);
@@ -44,19 +42,14 @@ abstract class AbstractEmailAddress implements EmailAddress
     }
 
     /**
-     * @param string $domain
-     * @param string $localPart
-     * @return static
      * @throws InvalidEmailAddressException
      */
-    final public static function fromDomainAndLocalPart(string $domain, string $localPart): self
+    final public static function fromDomainAndLocalPart(string $domain, string $localPart): static
     {
         return static::fromString($localPart . '@' . $domain);
     }
 
     /**
-     * @param string $domain
-     * @param string $localPart
      * @return string[]
      */
     protected static function normalizeDomainAndLocalPart(string $domain, string $localPart): array

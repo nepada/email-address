@@ -14,8 +14,6 @@ final class CaseInsensitiveEmailAddress extends AbstractEmailAddress
 {
 
     /**
-     * @param string $domain
-     * @param string $localPart
      * @return string[]
      */
     protected static function normalizeDomainAndLocalPart(string $domain, string $localPart): array

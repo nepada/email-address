@@ -32,16 +32,12 @@ abstract class EmailAddressTestCase extends TestCase
 
     /**
      * @dataProvider getValidEmailAddresses
-     * @param string $rawValue
-     * @param string $expectedLocalPart
-     * @param string $expectedDomain
-     * @param string $expectedValue
      */
     public function testValidEmailAddressFromString(
         string $rawValue,
         string $expectedLocalPart,
         string $expectedDomain,
-        string $expectedValue
+        string $expectedValue,
     ): void
     {
         $emailAddress = $this->createEmailAddressFromString($rawValue);
@@ -56,18 +52,13 @@ abstract class EmailAddressTestCase extends TestCase
 
     /**
      * @dataProvider getValidEmailAddressesParts
-     * @param string $localPart
-     * @param string $domain
-     * @param string $expectedLocalPart
-     * @param string $expectedDomain
-     * @param string $expectedValue
      */
     public function testValidEmailAddressFromDomainAndLocalPart(
         string $localPart,
         string $domain,
         string $expectedLocalPart,
         string $expectedDomain,
-        string $expectedValue
+        string $expectedValue,
     ): void
     {
         $emailAddress = $this->createEmailAddressFromDomainAndLocalPart($domain, $localPart);
@@ -83,7 +74,6 @@ abstract class EmailAddressTestCase extends TestCase
 
     /**
      * @dataProvider getInvalidEmailAddresses
-     * @param string $rawValue
      */
     public function testInvalidEmailAddressFromString(string $rawValue): void
     {
@@ -110,8 +100,6 @@ abstract class EmailAddressTestCase extends TestCase
 
     /**
      * @dataProvider getInvalidEmailAddressParts
-     * @param string $domain
-     * @param string $localPart
      */
     public function testInvalidEmailAddressFromDomainAndLocalPart(string $domain, string $localPart): void
     {
@@ -162,9 +150,6 @@ abstract class EmailAddressTestCase extends TestCase
 
     /**
      * @dataProvider getEmailAddressesForEqualityCheck
-     * @param string $rawValue
-     * @param EmailAddress $other
-     * @param bool $isEqual
      */
     public function testEquals(string $rawValue, EmailAddress $other, bool $isEqual): void
     {
