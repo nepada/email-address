@@ -27,7 +27,7 @@ class RfcEmailAddressTest extends EmailAddressTestCase
     }
 
     /**
-     * @return mixed[]
+     * @return list<mixed[]>
      */
     protected function getValidEmailAddresses(): array
     {
@@ -35,7 +35,7 @@ class RfcEmailAddressTest extends EmailAddressTestCase
     }
 
     /**
-     * @return array<int, array<string, string>>
+     * @return list<array<string, string>>
      */
     protected function getValidEmailAddressesParts(): array
     {
@@ -65,7 +65,7 @@ class RfcEmailAddressTest extends EmailAddressTestCase
     }
 
     /**
-     * @return mixed[]
+     * @return list<mixed[]>
      */
     protected function getEmailAddressesForEqualityCheck(): array
     {

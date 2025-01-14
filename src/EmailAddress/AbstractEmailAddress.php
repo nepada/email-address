@@ -50,7 +50,7 @@ abstract class AbstractEmailAddress implements EmailAddress
     }
 
     /**
-     * @return string[]
+     * @return list<string>
      */
     protected static function normalizeDomainAndLocalPart(string $domain, string $localPart): array
     {

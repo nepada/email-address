@@ -86,7 +86,7 @@ abstract class EmailAddressTestCase extends TestCase
     }
 
     /**
-     * @return mixed[]
+     * @return list<mixed[]>
      */
     protected function getInvalidEmailAddresses(): array
     {
@@ -112,7 +112,7 @@ abstract class EmailAddressTestCase extends TestCase
     }
 
     /**
-     * @return array<int, array<string, string>>
+     * @return list<array<string, string>>
      */
     protected function getInvalidEmailAddressParts(): array
     {
@@ -159,8 +159,8 @@ abstract class EmailAddressTestCase extends TestCase
     }
 
     /**
-     * @param array<int, array<string, string>> $data
-     * @return array<int, array<string, string>>
+     * @param list<array<string, string>> $data
+     * @return list<array<string, string>>
      */
     protected function domainAndLocalPartToValue(array $data): array
     {
