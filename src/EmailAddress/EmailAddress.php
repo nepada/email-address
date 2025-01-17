@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace Nepada\EmailAddress;
 
-interface EmailAddress
+interface EmailAddress extends \Stringable
 {
 
     /**
