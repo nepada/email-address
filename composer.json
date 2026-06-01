@@ -22,12 +22,12 @@
     },
     "require-dev": {
         "nette/tester": "v2.6.0",
-        "phpstan/phpstan": "2.1.54",
-        "phpstan/phpstan-strict-rules": "2.0.10",
+        "phpstan/phpstan": "2.2.1",
+        "phpstan/phpstan-strict-rules": "2.0.11",
         "phpstan/phpstan-nette": "2.0.9",
         "nepada/phpstan-nette-tester": "2.0.1",
         "spaze/phpstan-disallowed-calls": "4.12.0",
-        "shipmonk/phpstan-rules": "4.3.7",
+        "shipmonk/phpstan-rules": "4.4.0",
         "php-parallel-lint/php-parallel-lint": "1.4.0",
         "nepada/coding-standard": "8.0.1"
     },
