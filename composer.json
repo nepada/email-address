@@ -22,9 +22,9 @@
     },
     "require-dev": {
         "nette/tester": "v2.6.1",
-        "phpstan/phpstan": "2.2.1",
+        "phpstan/phpstan": "2.2.3",
         "phpstan/phpstan-strict-rules": "2.0.11",
-        "phpstan/phpstan-nette": "2.0.9",
+        "phpstan/phpstan-nette": "2.0.10",
         "nepada/phpstan-nette-tester": "2.0.1",
         "spaze/phpstan-disallowed-calls": "4.12.0",
         "shipmonk/phpstan-rules": "4.4.0",
