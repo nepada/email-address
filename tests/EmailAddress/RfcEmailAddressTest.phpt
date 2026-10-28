@@ -21,7 +21,10 @@ class RfcEmailAddressTest extends EmailAddressTestCase
         return RfcEmailAddress::fromString($value);
     }
 
-    protected function createEmailAddressFromDomainAndLocalPart(string $domain, string $localPart): RfcEmailAddress
+    protected function createEmailAddressFromDomainAndLocalPart(
+        string $domain,
+        string $localPart,
+    ): RfcEmailAddress
     {
         return RfcEmailAddress::fromDomainAndLocalPart($domain, $localPart);
     }

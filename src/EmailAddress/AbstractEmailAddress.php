@@ -11,17 +11,12 @@ abstract class AbstractEmailAddress implements EmailAddress
 
     use SmartObject;
 
-    private readonly string $rawValue;
-
-    private readonly string $localPart;
-
-    private readonly string $domain;
-
-    final private function __construct(string $rawValue, string $domain, string $localPart)
+    final private function __construct(
+        private readonly string $rawValue,
+        private readonly string $domain,
+        private readonly string $localPart,
+    )
     {
-        $this->rawValue = $rawValue;
-        $this->domain = $domain;
-        $this->localPart = $localPart;
     }
 
     /**
@@ -44,7 +39,10 @@ abstract class AbstractEmailAddress implements EmailAddress
     /**
      * @throws InvalidEmailAddressException
      */
-    final public static function fromDomainAndLocalPart(string $domain, string $localPart): static
+    final public static function fromDomainAndLocalPart(
+        string $domain,
+        string $localPart,
+    ): static
     {
         return static::fromString($localPart . '@' . $domain);
     }
@@ -52,7 +50,10 @@ abstract class AbstractEmailAddress implements EmailAddress
     /**
      * @return list<string>
      */
-    protected static function normalizeDomainAndLocalPart(string $domain, string $localPart): array
+    protected static function normalizeDomainAndLocalPart(
+        string $domain,
+        string $localPart,
+    ): array
     {
         $normalizedDomain = idn_to_ascii($domain, IDNA_NONTRANSITIONAL_TO_ASCII, INTL_IDNA_VARIANT_UTS46);
         if ($normalizedDomain === false) {

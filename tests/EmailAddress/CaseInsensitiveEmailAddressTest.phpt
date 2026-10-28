@@ -21,7 +21,10 @@ class CaseInsensitiveEmailAddressTest extends EmailAddressTestCase
         return CaseInsensitiveEmailAddress::fromString($value);
     }
 
-    protected function createEmailAddressFromDomainAndLocalPart(string $domain, string $localPart): CaseInsensitiveEmailAddress
+    protected function createEmailAddressFromDomainAndLocalPart(
+        string $domain,
+        string $localPart,
+    ): CaseInsensitiveEmailAddress
     {
         return CaseInsensitiveEmailAddress::fromDomainAndLocalPart($domain, $localPart);
     }

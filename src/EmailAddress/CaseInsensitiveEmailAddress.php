@@ -16,7 +16,10 @@ final class CaseInsensitiveEmailAddress extends AbstractEmailAddress
     /**
      * @return list<string>
      */
-    protected static function normalizeDomainAndLocalPart(string $domain, string $localPart): array
+    protected static function normalizeDomainAndLocalPart(
+        string $domain,
+        string $localPart,
+    ): array
     {
         [$normalizedDomain, $normalizedLocalPart] = parent::normalizeDomainAndLocalPart($domain, $localPart);
         $normalizedLocalPart = Strings::lower($normalizedLocalPart);

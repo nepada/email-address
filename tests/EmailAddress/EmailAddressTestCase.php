@@ -13,7 +13,10 @@ abstract class EmailAddressTestCase extends TestCase
 
     abstract protected function createEmailAddressFromString(string $value): EmailAddress;
 
-    abstract protected function createEmailAddressFromDomainAndLocalPart(string $domain, string $localPart): EmailAddress;
+    abstract protected function createEmailAddressFromDomainAndLocalPart(
+        string $domain,
+        string $localPart,
+    ): EmailAddress;
 
     /**
      * @return mixed[]
@@ -101,7 +104,10 @@ abstract class EmailAddressTestCase extends TestCase
     /**
      * @dataProvider getInvalidEmailAddressParts
      */
-    public function testInvalidEmailAddressFromDomainAndLocalPart(string $domain, string $localPart): void
+    public function testInvalidEmailAddressFromDomainAndLocalPart(
+        string $domain,
+        string $localPart,
+    ): void
     {
         Assert::exception(
             function () use ($domain, $localPart): void {
@@ -151,7 +157,11 @@ abstract class EmailAddressTestCase extends TestCase
     /**
      * @dataProvider getEmailAddressesForEqualityCheck
      */
-    public function testEquals(string $rawValue, EmailAddress $other, bool $isEqual): void
+    public function testEquals(
+        string $rawValue,
+        EmailAddress $other,
+        bool $isEqual,
+    ): void
     {
         $emailAddress = $this->createEmailAddressFromString($rawValue);
         Assert::same($isEqual, $emailAddress->equals($other));
